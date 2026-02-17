@@ -19,19 +19,18 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping()
-    public UrlResponse shortUrl(@RequestBody @Valid UrlCreateRequest request) {
-        return urlService.buildShortUrl(request);
+    public ResponseEntity<UrlResponse> shortUrl(@RequestBody @Valid UrlCreateRequest request) {
+        UrlResponse response = urlService.buildShortUrl(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/{shortCode}")
     public ResponseEntity<Void> redirect(@PathVariable String shortCode) {
-
         String originalUrl = urlService.getOriginalUrl(shortCode);
 
         return ResponseEntity
-                .status(HttpStatus.FOUND) // 302
+                .status(HttpStatus.FOUND) // 302 Redirect
                 .location(URI.create(originalUrl))
                 .build();
     }
-
 }
