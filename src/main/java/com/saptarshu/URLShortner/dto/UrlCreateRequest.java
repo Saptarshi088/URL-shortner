@@ -16,7 +16,6 @@ public class UrlCreateRequest {
     )
     private String url;
 
-    private String customCode; // Optional custom short code
 
 
     public UrlCreateRequest() {
@@ -24,7 +23,6 @@ public class UrlCreateRequest {
 
     public UrlCreateRequest(String url, String customCode) {
         this.url = url;
-        this.customCode = customCode;
     }
 
 

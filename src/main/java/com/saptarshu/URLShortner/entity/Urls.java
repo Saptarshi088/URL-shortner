@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -21,12 +22,10 @@ public class Urls {
 
     private String originalUrl;
 
-    @Column(unique = true,nullable = false)
     private String shortUrl;
 
     @CreationTimestamp
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
-    @Column(updatable = false)
-    private Long clickCount;
+    private Long clickCount = 0L;
 }
