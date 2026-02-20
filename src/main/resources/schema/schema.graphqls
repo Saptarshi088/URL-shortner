@@ -1,0 +1,19 @@
+type Query {
+    getOriginalUrl(shortCode: String!): String!
+}
+
+type Mutation {
+    generateShortUrl(input: UrlCreateRequest!): UrlResponse!
+}
+
+type UrlResponse {
+    originalUrl: String
+    shortUrl: String!
+    createdDate: String
+    clickCount: Int
+}
+
+input UrlCreateRequest {
+    url: String!
+}
+
