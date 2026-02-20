@@ -3,6 +3,7 @@ package com.saptarshu.URLShortner.controller;
 import com.saptarshu.URLShortner.dto.UrlCreateRequest;
 import com.saptarshu.URLShortner.dto.UrlResponse;
 import com.saptarshu.URLShortner.service.UrlService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +20,8 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping()
-    public ResponseEntity<UrlResponse> shortUrl(@RequestBody @Valid UrlCreateRequest request) {
-        UrlResponse response = urlService.buildShortUrl(request);
+    public ResponseEntity<UrlResponse> shortUrl(@RequestBody @Valid UrlCreateRequest request, HttpServletRequest httpServletRequest) {
+        UrlResponse response = urlService.buildShortUrl(request,httpServletRequest);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 

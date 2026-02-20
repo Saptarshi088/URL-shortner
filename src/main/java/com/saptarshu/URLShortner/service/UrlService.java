@@ -4,9 +4,11 @@ import com.saptarshu.URLShortner.dto.UrlCreateRequest;
 import com.saptarshu.URLShortner.dto.UrlResponse;
 import com.saptarshu.URLShortner.entity.Urls;
 import com.saptarshu.URLShortner.repository.UrlsRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -22,7 +24,7 @@ public class UrlService {
     private final SecureRandom random = new SecureRandom();
 
     @Transactional
-    public UrlResponse buildShortUrl(UrlCreateRequest request) {
+    public UrlResponse buildShortUrl(UrlCreateRequest request, HttpServletRequest httpServletRequest) {
         String shortCode;
 
         do {
@@ -38,9 +40,16 @@ public class UrlService {
 
         Urls savedUrl = urlsRepository.save(url);
 
+        String baseUrl = ServletUriComponentsBuilder
+                .fromRequestUri(httpServletRequest)
+                .replacePath(null)
+                .build()
+                .toUriString();
+
+
         return UrlResponse.builder()
                 .originalUrl(savedUrl.getOriginalUrl())
-                .shortUrl("http://localhost:8080/v1/api/" + shortCode)
+                .shortUrl(baseUrl + "/v1/api/" + shortCode)
                 .createdDate(savedUrl.getCreatedDate().toLocalDate().atStartOfDay())
                 .clickCount(savedUrl.getClickCount())
                 .build();
