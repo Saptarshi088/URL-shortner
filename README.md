@@ -32,6 +32,7 @@ Key properties in `src/main/resources/application.properties`:
 - `spring.datasource.url` = `${CLOUD_MYSQL_URI}`
 - `spring.jpa.hibernate.ddl-auto` = `update` (auto-creates/updates the `urls` table)
 - `spring.jpa.show-sql` = `true` (logs SQL; disable in production)
+- `app.cors.allowed-origins` = `http://localhost:5173` (comma-separated origins for the React dev server)
 
 ## API Reference
 Base path: `http://localhost:8080/v1/api`
@@ -92,3 +93,25 @@ Artifact will be at `target/URLShortner-0.0.1-SNAPSHOT.jar`.
 ## Troubleshooting
 - `java.lang.RuntimeException: Short URL not found` → verify the short code exists in the database.
 - Connection errors on startup → confirm `CLOUD_MYSQL_URI` is reachable and credentials are correct.
+
+## Frontend (React)
+A Vite + React UI lives in `frontend/` to create and copy short links.
+
+1) Install dependencies:
+```bash
+cd frontend
+npm install
+```
+2) Start the dev server (proxy to `http://localhost:8080` is built-in):
+```bash
+npm run dev
+```
+3) Point the API base to another host if needed by creating `frontend/.env`:
+```
+VITE_API_BASE=https://your-host/v1/api
+```
+4) Build static assets:
+```bash
+npm run build
+npm run preview   # optional local preview of the build
+```
