@@ -3,9 +3,6 @@ package com.saptarshu.URLShortner.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.CurrentTimestamp;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +17,8 @@ public class Urls {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String originalUrl;
 
     private String shortUrl;
