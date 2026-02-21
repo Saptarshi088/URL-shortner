@@ -21,6 +21,7 @@ public class Urls {
     @Column(columnDefinition = "TEXT")
     private String originalUrl;
 
+    @Column(name = "short_code", nullable = false, unique = true)
     private String shortUrl;
 
     @CreationTimestamp
